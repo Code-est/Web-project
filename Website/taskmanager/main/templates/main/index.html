@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Главная страница</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        /* Градиентный фон с анимацией */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(45deg, #1e3c72, #2a5298, #6dd5ed, #2193b0);
+            background-size: 400% 400%;
+            animation: gradientAnimation 8s ease infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Матовая поверхность под задачи */
+        .tasks-container {
+            width: 80%;
+            max-width: 900px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-top: 30px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-top: 20px;
+            color: #fff;
+            text-align: center;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #fff;
+            text-align: center;
+        }
+
+        .alert {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .alert h3 {
+            color: #1e3c72;
+        }
+
+        .alert p {
+            color: #2a5298;
+        }
+    </style>
+</head>
+<body>
+    <header class="p-3 text-bg-dark w-100">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+                </a>
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="{% url 'home' %}" class="nav-link px-2 text-white">Home</a></li>
+                    <li><a href="{% url 'about' %}" class="nav-link px-2 text-secondary">About</a></li>
+                    <li><a href="{% url 'create' %}" class="nav-link px-2 text-secondary">Create task</a></li>
+                    <li><a href="{% url 'login' %}" class="nav-link px-2 text-secondary">Login</a></li>
+                    <li><a href="{% url 'register' %}" class="nav-link px-2 text-secondary">Registration</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <h1>Главная страница</h1>
+    <p>Здесь вы можете увидеть все задачи, добавленные пользователями</p>
+
+    <div class="tasks-container">
+        {% block content %}
+        {% if tasks %}
+            {% for el in tasks %}
+                <div class="alert alert-warning mt-2">
+                    <h3>{{ el.title }}</h3>
+                    <p>{{ el.task }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>У нас нет записей!</p>
+        {% endif %}
+        {% endblock %}
+    </div>
+</body>
+</html>
